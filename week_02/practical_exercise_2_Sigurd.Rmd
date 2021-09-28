@@ -20,7 +20,7 @@ In this assignment we will be investigating the _politeness_ dataset of Winter a
 
 ```{r}
 pacman::p_load(rstanarm, tidyverse, lmerTest, lme4)
-pacman::p_load(MuMIn)
+pacman::p_load(MuMIn, effects)
 ```
 
 ## Dataset
@@ -143,7 +143,7 @@ m3.3 <- lmer(f0mn ~ gender + (1|subject), data = politeness, REML = F)
 
     iv. a two-level model that models intercepts for both _scenario_ and _subject_
 ```{r}
-m3.4 <- lmer(f0mn ~ gender + (1|scenario) + (1|subject), data = politeness, REML = F)
+m3.4 <- lmer(f0mn ~ (1|scenario) + (1|subject), data = politeness, REML = F)
 ```
 
 
@@ -215,16 +215,34 @@ solved with a simple yuen trim of outliers. The first model 3.1 holds the assump
 for the GLM better than the new model where f0mn is averaged. 
 
     iv. Also make a quantile-quantile plot for the residuals of the  multilevel model with two intercepts. Does it look alright?
-3) Plotting the two-intercepts model
+    
 ```{r}
 #car::qqPlot doesn't like mixed effect models so we do it like this. 
 qqnorm(resid(m3.4))
 qqline(resid(m3.4))
 ```
 
+3) Plotting the two-intercepts model
+```{r}
+m3.4
+
+ggplot(politeness, aes(x = scenario, y = f0mn)) + geom_point() + facet_wrap(subject~scenario)
+```
+
+
     i. Create a plot for each subject, (similar to part 3 in Exercise 1), this time also indicating the fitted value for each of the subjects for each for the scenarios (hint use `fixef` to get the "grand effects" for each gender and `ranef` to get the subject- and scenario-specific effects)
 ```{r}
+politeness_fil <- politeness %>%  #Remove NA's
+    filter(!is.na(f0mn))
 
+m3.5<- lmer(f0mn ~ scenario + attitude + (1|subject), data = politeness_fil)#new fit
+
+politeness_fit <- politeness_fil %>% #Create data frame with fitted and actual values. 
+  mutate(fitted_val = fitted.values(m3.5)) %>% 
+  pivot_longer(cols = c(f0mn,fitted_val) , names_to = "prefix", values_to = "f0mn_merg")
+
+
+ggplot(politeness_fit, aes(x = scenario, y = f0mn_merg, colour = prefix, shape = attitude)) + geom_point() + geom_smooth(method = "lm", se = F) +facet_wrap(~subject)
 ```
 
     
