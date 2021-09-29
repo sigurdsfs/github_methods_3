@@ -1,0 +1,74 @@
+---
+title: "Gelman-Hill_Chap6"
+author: "Sigurd Sørensen"
+date: "9/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load packages}
+pacman::p_load(tidyverse,haven)
+#Haven has a function for reading .dta files
+```
+
+### Exercise 1
+```{r}
+risky_df <- read_dta("C:/Users/sigur/Desktop/github_methods_3/Gelman-Hill_Exercises/Data/risky_behaviors.dta")
+```
+
+## A
+
+# Model Poisson
+```{r}
+risky_df<- risky_df %>% 
+  mutate(fupacts_int = as.integer(fupacts))
+
+m1 <- glm(fupacts_int ~ sex + couples + women_alone + bs_hiv, data = risky_df, family = poisson(link ="log"))
+summary(m1)
+exp(coef(m1))
+
+```
+# Test for overdispersion
+Right now the Residual deviance is 12584 on 429 degree of freedom. Rule of thump
+is that ratio between residual deviance and degree of freedom should be 1. But in
+this case it is 30 indicating serious overdispersion. 
+
+1) Here is a package for testing it. 
+```{r}
+pacman::p_load(AER)
+dispersiontest(m1)
+```
+Now it indicates taht dispersion are even closer to 42.
+
+2) Here is another package:
+
+```{r}
+pacman::p_load(DHARMa)
+sim_m1 <- DHARMa::simulateResiduals(m1, refit = T)
+testOverdispersion(sim_m1)
+```
+```{r}
+plotSimulatedResiduals(sim_m1)
+```
+# Fix overdispersion
+The quasi-families augment the normal families by adding a dispersion parameter. 
+In other words, while for Poisson data Y¯ = s^2_Y, the quasi-Poisson allows
+for Y¯ = τ · s^2_Y, and estimates the overdispersion
+parameter τ (or underdispersion, if τ < 1).
+
+https://biometry.github.io/APES/LectureNotes/2016-JAGS/Overdispersion/OverdispersionJAGS.pdf
+
+```{r}
+m2 <- glm(fupacts_int ~ sex + couples + women_alone + bs_hiv, data = risky_df, family = quasipoisson(link ="log"))
+summary(m2)
+```
+It added a dispersion parameter similar to that calculated by the AER package. 
+
+Once accounting for overdispersion sex and couples are no longer significant.
+So not accounting for overdispersion could result in inflated p-values. 
+
+
+
