@@ -1,0 +1,37 @@
+---
+title: "lu"
+author: "Sigurd Sørensen"
+date: "9/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+lul <- function(n,grand_mean,indi_mean,grand_se,indi_se){
+  ((n/indi_se*indi_mean)+(1/grand_se*grand_mean))/(n/indi_se+1/grand_se)
+}
+# j mean = 10    mean_all = 9
+
+lul(1,8,10,2,2) # approach grand mean of 9 
+lul(10,8,10,2,2) #approach 10
+lul(1000000000,8,10,2,2) #becomes 10
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

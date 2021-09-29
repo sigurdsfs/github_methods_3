@@ -42,8 +42,9 @@ REMEMBER: This assignment will be part of your final portfolio
 ## Exercise 1 - describing the dataset and making some initial plots
 
 1) Describe the dataset, such that someone who happened upon this dataset could understand the variables and what they contain  
+
     i. Also consider whether any of the variables in _politeness_ should be encoded as factors or have the factor encoding removed. Hint: ```?factor```  
-    
+   
 ```{r}
 summary(politeness)
 ```
@@ -56,13 +57,13 @@ politeness <- politeness %>%
 head(politeness)
 ```
     
-2) Create a new data frame that just contains the subject _F1_ and run two linear models; one that expresses _f0mn_ as dependent on _scenario_ as an integer; and one that expresses _f0mn_ as dependent on _scenario_ encoded as a factor  
+2) Create a new data frame that just contains the subject _F1_ and run two linear models; one that expresses _f0mn_ as dependent on _scenario_ as an integer; and one that expresses _f0mn_ as dependent on _scenario_ encoded as a factor.  
 
 ```{r}
 politeness_F1 <- politeness %>% 
   filter(subject == "F1")
-m1 <- lm(f0mn ~ scenario, data = politeness_F1, refresh = 0)
-m2 <- lm(f0mn ~ as.integer(scenario), data = politeness_F1, refresh = 0)
+m1 <- lm(f0mn ~ scenario, data = politeness_F1)
+m2 <- lm(f0mn ~ as.integer(scenario), data = politeness_F1)
 ```
 
     i. Include the model matrices, $X$ from the General Linear Model, for these two models in your report and describe the different interpretations of _scenario_ that these entail
@@ -139,11 +140,13 @@ m3.2 <- lmer(f0mn ~ gender + (1|scenario), data = politeness, REML = F)
     iii. a two-level model that only has _subject_ as an intercept 
 ```{r}
 m3.3 <- lmer(f0mn ~ gender + (1|subject), data = politeness, REML = F)
+summary(m3.3)
 ```
 
     iv. a two-level model that models intercepts for both _scenario_ and _subject_
 ```{r}
-m3.4 <- lmer(f0mn ~ (1|scenario) + (1|subject), data = politeness, REML = F)
+m3.4 <- lmer(f0mn ~ gender + (1|scenario) + (1|subject), data = politeness, REML = F)
+summary(m3.4)
 ```
 
 
@@ -208,10 +211,9 @@ m4.1 <- lm(f0mn ~ gender, data = politeness_sel)
 #qqPlot
 car::qqPlot(m4.1, main = "QQplot for the mean model")
 car::qqPlot(m3.1, main = "QQplot for the normal model")
-
 ```
 Both models residual distribution seems to be slighly heavy tailed. This could be
-solved with a simple yuen trim of outliers. The first model 3.1 holds the assumptions
+solved with a simple yuen trim of outliers. The first model 4.1 holds the assumptions
 for the GLM better than the new model where f0mn is averaged. 
 
     iv. Also make a quantile-quantile plot for the residuals of the  multilevel model with two intercepts. Does it look alright?
@@ -220,17 +222,14 @@ for the GLM better than the new model where f0mn is averaged.
 #car::qqPlot doesn't like mixed effect models so we do it like this. 
 qqnorm(resid(m3.4))
 qqline(resid(m3.4))
+
+
 ```
 
 3) Plotting the two-intercepts model
-```{r}
-m3.4
-
-ggplot(politeness, aes(x = scenario, y = f0mn)) + geom_point() + facet_wrap(subject~scenario)
-```
-
 
     i. Create a plot for each subject, (similar to part 3 in Exercise 1), this time also indicating the fitted value for each of the subjects for each for the scenarios (hint use `fixef` to get the "grand effects" for each gender and `ranef` to get the subject- and scenario-specific effects)
+
 ```{r}
 politeness_fil <- politeness %>%  #Remove NA's
     filter(!is.na(f0mn))
@@ -281,14 +280,18 @@ compared to the effect size makes it very difficult to say anything meaningfull.
 
 ```{r}
 #reidual variance 
-c(RS_5.2 = summary(m5.2)$sigma^2,
-RS_5.1 = summary(m5.1)$sigma^2,
-RS_3.4 = summary(m3.4)$sigma^2)
+c(RS_5.2 = sum(residuals(m5.2)^2),
+RS_5.1 = sum(residuals(m5.1)^2),
+RS_3.4 = sum(residuals(m3.4)^2))
+
+
+
 
 #residual standard deviation
 c(S_res5.2 = sqrt(sum(resid(m5.2)^2)/(nrow(politeness)-2)),  
 S_res5.1 = sqrt(sum(resid(m5.2)^2)/(nrow(politeness)-2)),
 S_res3.4 = sqrt(sum(resid(m3.4)^2)/(nrow(politeness)-2)))
+
 anova(m3.4, m5.1, m5.2)
 ```
 
@@ -306,8 +309,8 @@ My decision is based primary based on AIC R_res and RS. But theoretically it als
 to include both random intercepts due to the study being repeated measure and some
 variance being random/unsystematic. attitude furthermore seems like an important 
 addition to the model as specific attitudes are correlated with pitch frequency
-(See imaginiry study). However the interaction between gender:attitude doesn't add
-anything explaining to the model. 
+(See imaginary study). However the interaction between gender:attitude doesn't add
+any explaining to the model. 
 
 ```{r}
 summary(m5.1)
