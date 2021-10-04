@@ -14,14 +14,23 @@ pacman::p_load(tidyverse,haven)
 #Haven has a function for reading .dta files
 ```
 
-### Exercise 1
+# Exercise 1
+Poisson regression: the folder risky.behavior contains data from a randomized
+trial targeting couples at high risk of HIV infection. The intervention provided
+counseling sessions regarding practices that could reduce their likelihood
+of contracting HIV. Couples were randomized either to a control group, a group
+in which just the woman participated, or a group in which both members of
+the couple participated. One of the outcomes examined after three months was
+“number of unprotected sex acts.”
+
 ```{r}
 risky_df <- read_dta("C:/Users/sigur/Desktop/github_methods_3/Gelman-Hill_Exercises/Data/risky_behaviors.dta")
 ```
 
 ## A
+Predict fupacts(frequency of unprotected sex) following intervention. 
 
-# Model Poisson
+### Model Poisson
 ```{r}
 risky_df<- risky_df %>% 
   mutate(fupacts_int = as.integer(fupacts))
@@ -31,7 +40,7 @@ summary(m1)
 exp(coef(m1))
 
 ```
-# Test for overdispersion
+### Test for overdispersion
 Right now the Residual deviance is 12584 on 429 degree of freedom. Rule of thump
 is that ratio between residual deviance and degree of freedom should be 1. But in
 this case it is 30 indicating serious overdispersion. 
@@ -53,7 +62,7 @@ testOverdispersion(sim_m1)
 ```{r}
 plotSimulatedResiduals(sim_m1)
 ```
-# Fix overdispersion
+### Fix overdispersion
 The quasi-families augment the normal families by adding a dispersion parameter. 
 In other words, while for Poisson data Y¯ = s^2_Y, the quasi-Poisson allows
 for Y¯ = τ · s^2_Y, and estimates the overdispersion
@@ -69,6 +78,45 @@ It added a dispersion parameter similar to that calculated by the AER package.
 
 Once accounting for overdispersion sex and couples are no longer significant.
 So not accounting for overdispersion could result in inflated p-values. 
+
+## B 
+Include bupacts as a predictor (unprotected sex prior to intervention)
+
+We also see indication of overdispersion so we do quasipoisson regression. 
+```{r}
+m3 <- glm(fupacts_int ~ sex + couples + women_alone + bs_hiv + bupacts, data = risky_df, family = quasipoisson(link ="log"))
+summary(m3)
+```
+## C
+Interpret the coefficients of our overdispered quasipoisson regression model3.
+```{r}
+#Reversing from the log scale to get the scale back to the normal scale.
+exp(coef(m3))
+```
+Intervention where both partners partcipate will increase the frequency of
+unprotected sex by 0.66.
+
+While the intervention of women_alone only increased it by 0.5136
+
+MIGHT BE THE OTHER WAY AROUND SO THAT 0= Treatment and 1= No-treatment (would make sense)
+
+
+## D
+These data include responses from both men and women from the participating
+couples. Does this give you any concern with regard to our modeling
+assumptions?
+
+Maybe I don't know...?!? 
+
+
+
+
+# Exercise 2
+Multinomial logit: using the individual-level survey data from the 2000 National
+Election Study (data in folder nes), predict party identification (which is on a
+five-point scale) using ideology and demographics with an ordered multinomial
+logit model.
+
 
 
 
