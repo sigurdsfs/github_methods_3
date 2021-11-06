@@ -1,4 +1,4 @@
-name: methods3
+coname: methods3_sigurd
 channels:
 - conda-forge
 dependencies:
