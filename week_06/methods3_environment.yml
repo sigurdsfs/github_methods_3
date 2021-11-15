@@ -1,0 +1,14 @@
+name: methods3
+channels:
+- conda-forge
+dependencies:
+- python>=3.8
+- pip
+- scikit-learn
+- spyder-kernels>=1.10.0
+- spyder
+- matplotlib
+- numpy
+- scipy
+- pandas
+- seaborn
