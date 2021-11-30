@@ -12,7 +12,7 @@
 <meta name="author" content="[FILL IN YOUR NAME]" />
 
 
-<title>practical_exercise_8 , Methods 3, 2021, autumn semester</title>
+<title>practical_exercise_10 , Methods 3, 2021, autumn semester</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -361,7 +361,7 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">practical_exercise_8 , Methods 3, 2021, autumn semester</h1>
+<h1 class="title toc-ignore">practical_exercise_10 , Methods 3, 2021, autumn semester</h1>
 <h4 class="author">[FILL IN YOUR NAME]</h4>
 <h4 class="date">[FILL IN THE DATE]</h4>
 
@@ -376,127 +376,48 @@ pre code {
 <div id="exercises-and-objectives" class="section level1">
 <h1>Exercises and objectives</h1>
 <ol style="list-style-type: decimal">
-<li>Load the magnetoencephalographic recordings and do some initial plots to understand the data<br />
+<li>Use principal component analysis to improve the classification of subjective experience<br />
 </li>
-<li>Do logistic regression to classify pairs of PAS-ratings<br />
-</li>
-<li>Do a Support Vector Machine Classification on all four PAS-ratings</li>
+<li>Use logistic regression with cross-validation to find the optimal number of principal components</li>
 </ol>
 <p>REMEMBER: In your report, make sure to include code that can reproduce the answers requested in the exercises below (<strong>MAKE A KNITTED VERSION</strong>)<br />
-REMEMBER: This is Assignment 3 and will be part of your final portfolio</p>
+REMEMBER: This is Assignment 4 and will be part of your final portfolio</p>
 </div>
-<div id="exercise-1---load-the-magnetoencephalographic-recordings-and-do-some-initial-plots-to-understand-the-data" class="section level1">
-<h1>EXERCISE 1 - Load the magnetoencephalographic recordings and do some initial plots to understand the data</h1>
-<p>The files <code>megmag_data.npy</code> and <code>pas_vector.npy</code> can be downloaded here (<a href="http://laumollerandersen.org/data_methods_3/megmag_data.npy" class="uri">http://laumollerandersen.org/data_methods_3/megmag_data.npy</a>) and here (<a href="http://laumollerandersen.org/data_methods_3/pas_vector.npy" class="uri">http://laumollerandersen.org/data_methods_3/pas_vector.npy</a>)</p>
+<div id="exercise-1---use-principal-component-analysis-to-improve-the-classification-of-subjective-experience" class="section level1">
+<h1>EXERCISE 1 - Use principal component analysis to improve the classification of subjective experience</h1>
+<p>We will use the same files as we did in Assignment 3 The files <code>megmag_data.npy</code> and <code>pas_vector.npy</code> can be downloaded here (<a href="http://laumollerandersen.org/data_methods_3/megmag_data.npy" class="uri">http://laumollerandersen.org/data_methods_3/megmag_data.npy</a>) and here (<a href="http://laumollerandersen.org/data_methods_3/pas_vector.npy" class="uri">http://laumollerandersen.org/data_methods_3/pas_vector.npy</a>)<br />
+The function <code>equalize_targets</code> is supplied - this time, we will only work with an equalized data set. One motivation for this is that we have a well-defined chance level that we can compare against. Furthermore, we will look at a single time point to decrease the dimensionality of the problem</p>
 <ol style="list-style-type: decimal">
-<li>Load <code>megmag_data.npy</code> and call it <code>data</code> using <code>np.load</code>. You can use <code>join</code>, which can be imported from <code>os.path</code>, to create paths from different string segments
+<li>Create a covariance matrix, find the eigenvectors and the eigenvalues
 <ol style="list-style-type: lower-roman">
-<li>The data is a 3-dimensional array. The first dimension is number of repetitions of a visual stimulus , the second dimension is the number of sensors that record magnetic fields (in Tesla) that stem from neurons activating in the brain, and the third dimension is the number of time samples. How many repetitions, sensors and time samples are there?<br />
+<li>Load <code>megmag_data.npy</code> and call it <code>data</code> using <code>np.load</code>. You can use <code>join</code>, which can be imported from <code>os.path</code>, to create paths from different string segments</li>
+<li>Equalize the number of targets in <code>y</code> and <code>data</code> using <code>equalize_targets</code><br />
 </li>
-<li>The time range is from (and including) -200 ms to (and including) 800 ms with a sample recorded every 4 ms. At time 0, the visual stimulus was briefly presented. Create a 1-dimensional array called <code>times</code> that represents this.<br />
+<li>Construct <code>times=np.arange(-200, 804, 4)</code> and find the index corresponding to 248 ms - then reduce the dimensionality of <code>data</code> from three to two dimensions by only choosing the time index corresponding to 248 ms (248 ms was where we found the maximal average response in Assignment 3)</li>
+<li>Scale the data using <code>StandardScaler</code><br />
 </li>
-<li>Create the sensor covariance matrix <span class="math inline">\(\Sigma_{XX}\)</span>: <span class="math display">\[\Sigma_{XX} = \frac 1 N \sum_{i=1}^N XX^T\]</span> <span class="math inline">\(N\)</span> is the number of repetitions and <span class="math inline">\(X\)</span> has <span class="math inline">\(s\)</span> rows and <span class="math inline">\(t\)</span> columns (sensors and time), thus the shape is <span class="math inline">\(X_{s\times t}\)</span>. Do the sensors pick up independent signals? (Use <code>plt.imshow</code> to plot the sensor covariance matrix)<br />
+<li>Calculate the sample covariance matrix for the sensors (you can use <code>np.cov</code>) and plot it (either using <code>plt.imshow</code> or <code>sns.heatmap</code> (<code>import seaborn as sns</code>))<br />
 </li>
-<li>Make an average over the repetition dimension using <code>np.mean</code> - use the <code>axis</code> argument. (The resulting array should have two dimensions <del>with time as the first and magnetic field as the second</del> with sensor as the first and time as the second)<br />
+<li>What does the off-diagonal activation imply about the independence of the signals measured by the 102 sensors?<br />
 </li>
-<li>Plot the magnetic field (based on the average) as it evolves over time for each of the sensors (a line for each) (time on the x-axis and magnetic field on the y-axis). Add a horizontal line at <span class="math inline">\(y = 0\)</span> and a vertical line at <span class="math inline">\(x = 0\)</span> using <code>plt.axvline</code> and <code>plt.axhline</code><br />
+<li>Run <code>np.linalg.matrix_rank</code> on the covariance matrix - what integer value do you get? (we’ll use this later)<br />
 </li>
-<li>Find the maximal magnetic field in the average. Then use <code>np.argmax</code> and <code>np.unravel_index</code> to find the sensor that has the maximal magnetic field.<br />
-</li>
-<li>Plot the magnetic field for each of the repetitions (a line for each) for the sensor that has the maximal magnetic field. Highlight the time point with the maximal magnetic field in the average (as found in 1.1.v) using <code>plt.axvline</code><br />
-</li>
-<li>Describe in your own words how the response found in the average is represented in the single repetitions. But do make sure to use the concepts <em>signal</em> and <em>noise</em> and comment on any differences on the range of values on the y-axis<br />
+<li>Find the eigenvalues and eigenvectors of the covariance matrix using <code>np.linalg.eig</code> - note that some of the numbers returned are complex numbers, consisting of a real and an imaginary part (they have a <em>j</em> next to them). We are going to ignore this by only looking at the real parts of the eigenvectors and -values. Use <code>np.real</code> to retrieve only the real parts<br />
 </li>
 </ol></li>
-<li>Now load <code>pas_vector.npy</code> (call it <code>y</code>). PAS is the same as in Assignment 2, describing the clarity of the subjective experience the subject reported after seeing the briefly presented stimulus
+<li>Create the weighting matrix <span class="math inline">\(W\)</span> and the projected data, <span class="math inline">\(Z\)</span>
 <ol style="list-style-type: lower-roman">
-<li>Which dimension in the <code>data</code> array does it have the same length as?<br />
+<li>We need to sort the eigenvectors and eigenvalues according to the absolute values of the eigenvalues (use <code>np.abs</code> on the eigenvalues).<br />
 </li>
-<li>Now make four averages (As in Exercise 1.1.iii), one for each PAS rating, and plot the four time courses (one for each PAS rating) for the sensor found in Exercise <del>1.1.v</del> 1.1.vi</li>
-<li>Notice that there are two early peaks (measuring visual activity from the brain), one before 200 ms and one around 250 ms. Describe how the amplitudes of responses are related to the four PAS-scores. Does PAS 2 behave differently than expected?</li>
-</ol></li>
-</ol>
-</div>
-<div id="exercise-2---do-logistic-regression-to-classify-pairs-of-pas-ratings" class="section level1">
-<h1>EXERCISE 2 - Do logistic regression to classify pairs of PAS-ratings</h1>
-<ol style="list-style-type: decimal">
-<li>Now, we are going to do Logistic Regression with the aim of classifying the PAS-rating given by the subject
-<ol style="list-style-type: lower-roman">
-<li>We’ll start with a binary problem - create a new array called <code>data_1_2</code> that only contains PAS responses 1 and 2. Similarly, create a <code>y_1_2</code> for the target vector<br />
+<li>Then, we will find the correct ordering of the indices and create an array, e.g. <code>sorted_indices</code> that contains these indices. We want to sort the values from highest to lowest. For that, use <code>np.argsort</code>, which will find the indices that correspond to sorting the values from lowest to highest. Subsequently, use <code>np.flip</code>, which will reverse the order of the indices.<br />
 </li>
-<li>Scikit-learn expects our observations (<code>data_1_2</code>) to be in a 2d-array, which has samples (repetitions) on dimension 1 and features (predictor variables) on dimension 2. Our <code>data_1_2</code> is a three-dimensional array. Our strategy will be to collapse our two last dimensions (sensors and time) into one dimension, while keeping the first dimension as it is (repetitions). Use <code>np.reshape</code> to create a variable <code>X_1_2</code> that fulfils these criteria.<br />
+<li>Finally, create arrays of sorted eigenvalues and eigenvectors using the <code>sorted_indices</code> array just created. For the eigenvalues, it should like this <code>eigenvalues = eigenvalues[sorted_indices]</code> and for the eigenvectors: <code>eigenvectors = eigenvectors[:, sorted_indices]</code></li>
+<li>Plot the log, <code>np.log</code>, of the eigenvalues, <code>plt.plot(np.log(eigenvalues), &#39;o&#39;)</code> - are there some values that stand out from the rest? In fact, 5 (noise) dimensions have already been projected out of the data - how does that relate to the matrix rank (Exercise 1.1.vii)<br />
 </li>
-<li>Import the <code>StandardScaler</code> and scale <code>X_1_2</code><br />
+<li>Create the weighting matrix, <code>W</code> (it is the sorted eigenvectors)<br />
 </li>
-<li>Do a standard <code>LogisticRegression</code> - can be imported from <code>sklearn.linear_model</code> - make sure there is no <code>penalty</code> applied<br />
-</li>
-<li>Use the <code>score</code> method of <code>LogisticRegression</code> to find out how many labels were classified correctly. Are we overfitting? Besides the score, what would make you suspect that we are overfitting?<br />
-</li>
-<li>Now apply the <em>L1</em> penalty instead - how many of the coefficients (<code>.coef_</code>) are non-zero after this?<br />
-</li>
-<li>Create a new reduced <span class="math inline">\(X\)</span> that only includes the non-zero coefficients - show the covariance of the non-zero features (two covariance matrices can be made; <span class="math inline">\(X_{reduced}X_{reduced}^T\)</span> or <span class="math inline">\(X_{reduced}^TX_{reduced}\)</span> (you choose the right one)) . Plot the covariance of the features using <code>plt.imshow</code>. Compared to the plot from 1.1.iii, do we see less covariance?<br />
-</li>
-</ol></li>
-<li>Now, we are going to build better (more predictive) models by using cross-validation as an outcome measure
-<ol style="list-style-type: lower-roman">
-<li>Import <code>cross_val_score</code> and <code>StratifiedKFold</code> from <code>sklearn.model_selection</code><br />
-</li>
-<li>To make sure that our training data sets are not biased to one target (PAS) or the other, create <code>y_1_2_equal</code>, which should have an equal number of each target. Create a similar <code>X_1_2_equal</code>. The function <code>equalize_targets_binary</code> in the code chunk associated with Exercise 2.2.ii can be used. Remember to scale <code>X_1_2_equal</code>!<br />
-</li>
-<li>Do cross-validation with 5 stratified folds doing standard <code>LogisticRegression</code> (See Exercise 2.1.iv)<br />
-</li>
-<li>Do L2-regularisation with the following <code>Cs=  [1e5, 1e1, 1e-5]</code>. Use the same kind of cross-validation as in Exercise 2.2.iii. In the best-scoring of these models, how many more/fewer predictions are correct (on average)?<br />
-</li>
-<li>Instead of fitting a model on all <code>n_sensors * n_samples</code> features, fit a logistic regression (same kind as in Exercise 2.2.iv (use the <code>C</code> that resulted in the best prediction)) for <strong>each</strong> time sample and use the same cross-validation as in Exercise 2.2.iii. What are the time points where classification is best? Make a plot with time on the x-axis and classification score on the y-axis with a horizontal line at the chance level (what is the chance level for this analysis?)<br />
-</li>
-<li>Now do the same, but with L1 regression - set <code>C=1e-1</code> - what are the time points when classification is best? (make a plot)?<br />
-</li>
-<li>Finally, fit the same models as in Exercise 2.2.vi but now for <code>data_1_4</code> and <code>y_1_4</code> (create a data set and a target vector that only contains PAS responses 1 and 4). What are the time points when classification is best? Make a plot with time on the x-axis and classification score on the y-axis with a horizontal line at the chance level (what is the chance level for this analysis?)<br />
-</li>
-</ol></li>
-<li>Is pairwise classification of subjective experience possible? Any surprises in the classification accuracies, i.e. how does the classification score fore PAS 1 vs 4 compare to the classification score for PAS 1 vs 2?</li>
-</ol>
-<pre class="python"><code># Exercise 2.2.ii
-def equalize_targets_binary(data, y):
-    np.random.seed(7)
-    targets = np.unique(y) ## find the number of targets
-    if len(targets) &gt; 2:
-        raise NameError(&quot;can&#39;t have more than two targets&quot;)
-    counts = list()
-    indices = list()
-    for target in targets:
-        counts.append(np.sum(y == target)) ## find the number of each target
-        indices.append(np.where(y == target)[0]) ## find their indices
-    min_count = np.min(counts)
-    # randomly choose trials
-    first_choice = np.random.choice(indices[0], size=min_count, replace=False)
-    second_choice = np.random.choice(indices[1], size=min_count,replace=False)
-    
-    # create the new data sets
-    new_indices = np.concatenate((first_choice, second_choice))
-    new_y = y[new_indices]
-    new_data = data[new_indices, :, :]
-    
-    return new_data, new_y</code></pre>
-</div>
-<div id="exercise-3---do-a-support-vector-machine-classification-on-all-four-pas-ratings" class="section level1">
-<h1>EXERCISE 3 - Do a Support Vector Machine Classification on all four PAS-ratings</h1>
-<ol style="list-style-type: decimal">
-<li>Do a Support Vector Machine Classification
-<ol style="list-style-type: lower-roman">
-<li>First equalize the number of targets using the function associated with each PAS-rating using the function associated with Exercise 3.1.i<br />
-</li>
-<li>Run two classifiers, one with a linear kernel and one with a radial basis (other options should be left at their defaults) - the number of features is the number of sensors multiplied the number of samples. Which one is better predicting the category?</li>
-<li>Run the sample-by-sample analysis (similar to Exercise 2.2.v) with the best kernel (from Exercise 3.1.ii). Make a plot with time on the x-axis and classification score on the y-axis with a horizontal line at the chance level (what is the chance level for this analysis?)</li>
-<li>Is classification of subjective experience possible at around 200-250 ms?<br />
-</li>
-</ol></li>
-<li>Finally, split the equalized data set (with all four ratings) into a training part and test part, where the test part if 30 % of the trials. Use <code>train_test_split</code> from <code>sklearn.model_selection</code>
-<ol style="list-style-type: lower-roman">
-<li>Use the kernel that resulted in the best classification in Exercise 3.1.ii and <code>fit</code>the training set and <code>predict</code> on the test set. This time your features are the number of sensors multiplied by the number of samples.<br />
-</li>
-<li>Create a <em>confusion matrix</em>. It is a 4x4 matrix. The row names and the column names are the PAS-scores. There will thus be 16 entries. The PAS1xPAS1 entry will be the number of actual PAS1, <span class="math inline">\(y_{pas1}\)</span> that were predicted as PAS1, <span class="math inline">\(\hat y_{pas1}\)</span>. The PAS1xPAS2 entry will be the number of actual PAS1, <span class="math inline">\(y_{pas1}\)</span> that were predicted as PAS2, <span class="math inline">\(\hat y_{pas2}\)</span> and so on for the remaining 14 entries. Plot the matrix</li>
-<li>Based on the confusion matrix, describe how ratings are misclassified and if that makes sense given that ratings should measure the strength/quality of the subjective experience. Is the classifier biased towards specific ratings?</li>
+<li>Create the projected data, <code>Z</code>, <span class="math inline">\(Z = XW\)</span> - (you can check you did everything right by checking whether the <span class="math inline">\(X\)</span> you get from <span class="math inline">\(X = ZW^T\)</span> is equal to your original <span class="math inline">\(X\)</span>, <code>np.isclose</code> may be of help)</li>
+<li>Create a new covariance matrix of the principal components (n=102) - plot it! What has happened off-diagonal and why?</li>
 </ol></li>
 </ol>
 <pre class="python"><code>def equalize_targets(data, y):
@@ -519,6 +440,35 @@ def equalize_targets_binary(data, y):
     new_data = data[new_indices, :, :]
     
     return new_data, new_y</code></pre>
+</div>
+<div id="exercise-2---use-logistic-regression-with-cross-validation-to-find-the-optimal-number-of-principal-components" class="section level1">
+<h1>EXERCISE 2 - Use logistic regression with cross-validation to find the optimal number of principal components</h1>
+<ol style="list-style-type: decimal">
+<li>We are going to run logistic regression with in-sample validation
+<ol style="list-style-type: lower-roman">
+<li>First, run standard logistic regression (no regularization) based on <span class="math inline">\(Z_{d \times k}\)</span> and <code>y</code> (the target vector). Fit (<code>.fit</code>) 102 models based on: <span class="math inline">\(k = [1, 2, ..., 101, 102]\)</span> and <span class="math inline">\(d = 102\)</span>. For each fit get the classification accuracy, (<code>.score</code>), when applied to <span class="math inline">\(Z_{d \times k}\)</span> and <span class="math inline">\(y\)</span>. This is an in-sample validation. Use the solver <code>newton-cg</code> if the default solver doesn’t converge</li>
+<li>Make a plot with the number of principal components on the <em>x</em>-axis and classification accuracy on the <em>y</em>-axis - what is the general trend and why is this so?</li>
+<li>In terms of classification accuracy, what is the effect of adding the five last components? Why do you think this is so?</li>
+</ol></li>
+<li>Now, we are going to use cross-validation - we are using <code>cross_val_score</code> and <code>StratifiedKFold</code> from <code>sklearn.model_selection</code>
+<ol style="list-style-type: lower-roman">
+<li>Define the variable: <code>cv = StratifiedKFold()</code> and run <code>cross_val_score</code> (remember to set the <code>cv</code> argument to your created <code>cv</code> variable). Use the same <code>estimator</code> in <code>cross_val_score</code> as in Exercise 2.1.i. Find the mean score over the 5 folds (the default of <code>StratifiedKFold</code>) for each <span class="math inline">\(k\)</span>, <span class="math inline">\(k = [1, 2, ..., 101, 102]\)</span><br />
+</li>
+<li>Make a plot with the number of principal components on the <em>x</em>-axis and classification accuracy on the <em>y</em>-axis - how is this plot different from the one in Exercise 2.1.ii?</li>
+<li>What is the number of principal components, <span class="math inline">\(k_{max\_accuracy}\)</span>, that results in the greatest classification accuracy when cross-validated?<br />
+</li>
+<li>How many percentage points is the classification accuracy increased with relative to the to the full-dimensional, <span class="math inline">\(d\)</span>, dataset</li>
+<li>How do the analyses in Exercises 2.1 and 2.2 differ from one another? Make sure to comment on the differences in optimization criteria.<br />
+</li>
+</ol></li>
+<li>We now make the assumption that <span class="math inline">\(k_{max\_accuracy}\)</span> is representative for each time sample (we only tested for 248 ms). We will use the PCA implementation from <em>scikit-learn</em>, i.e. import <code>PCA</code> from <code>sklearn.decomposition</code>.
+<ol style="list-style-type: lower-roman">
+<li>For <strong>each</strong> of the 251 time samples, use the same estimator and cross-validation as in Exercises 2.1.i and 2.2.i. Run two analyses - one where you reduce the dimensionality to <span class="math inline">\(k_{max\_accuracy}\)</span> dimensions using <code>PCA</code> and one where you use the full data. Remember to scale the data (for now, ignore if you get some convergence warnings - you can try to increase the number of iterations, but this is not obligatory)<br />
+</li>
+<li>Plot the classification accuracies for each time sample for the analysis with PCA and for the one without in the same plot. Have time (ms) on the <em>x</em>-axis and classification accuracy on the <em>y</em>-axis</li>
+<li>Describe the differences between the two analyses - focus on the time interval between 0 ms and 400 ms - describe in your own words why the logistic regression performs better on the PCA-reduced dataset around the peak magnetic activity</li>
+</ol></li>
+</ol>
 </div>
 
 
