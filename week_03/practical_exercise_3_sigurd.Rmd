@@ -1,5 +1,5 @@
 ---
-title: "practical_exercise_3, Methods 3, 2021, autumn semester"
+title: "Portfolio 2.1, Methods 3, 2021, autumn semester"
 author: 'Sigurd Fyhn Sørensen'
 date: "04/10/2021"
 output: html_document
@@ -30,7 +30,7 @@ Go to https://osf.io/ecxsj/files/ and download the files associated with Experim
 The data is associated with Experiment 2 of the article at the following DOI https://doi.org/10.1016/j.concog.2019.03.007  
 
 1) Put the data from all subjects into a single data frame  
-```{r}
+```{r, include = FALSE}
 pacman::p_load(readbulk, tidyverse, lmerTest, lme4, rstanarm)
 df_exp <- readbulk::read_bulk("experiment_2", extension = ".csv")
 ```
@@ -38,7 +38,7 @@ df_exp <- readbulk::read_bulk("experiment_2", extension = ".csv")
 2) Describe the data and construct extra variables from the existing variables  
     i. add a variable to the data frame and call it _correct_ (have it be a _logical_ variable).
 Assign a 1 to each row where the subject indicated the correct answer and a 0 to each row where the subject indicated the incorrect answer (__Hint:__ the variable _obj.resp_ indicates whether the subject answered "even", _e_ or "odd", _o_, and the variable _target_type_ indicates what was actually presented.
-```{r i.}
+```{r}
 
 
 df_exp <- df_exp %>% 
@@ -87,7 +87,8 @@ df_exp_stair <- df_exp %>%
 df_exp_stair %>%
   ggplot(aes(x = target.contrast, y = fit_value)) + geom_point() + facet_wrap(~subject)
 ```
-    
+As can be seen by the above plot we do not have something that resembles a sigmoid function.The "shape" is almost there but with a lot of holes. Having a data point for each x with a step of 0.01 should result in a perfect sigmoid fit. 
+
     iv. on top of those plots, add the estimated functions (on the _target.contrast_ range from 0-1) for each subject based on partial pooling model (use `glmer` from the package `lme4`) where unique intercepts and slopes for _target.contrast_ are modelled for each _subject_ 
 ```{r}
 m2 <- glmer(right_answer ~ target.contrast + (1+target.contrast|subject), data = df_exp_stair, family = binomial(link = "logit"))
@@ -332,7 +333,7 @@ m3.5 <- glmer(count ~ pas+task + (1+pas|subject), family = poisson(link = "log")
 summary(m3.5)
 ```
 ### Comparing interaction and offset models
-```{r}
+```{r, warning= FALSE}
 #check R^2
 MuMIn::r.squaredGLMM(m3.2)
 MuMIn::r.squaredGLMM(m3.3)
@@ -353,10 +354,10 @@ unceccesary model complexity.
 The inclusion of an offset variable is theoretical warranted when working with
 frequencies in poission regression as argued by Gelman and Hill in 
 (Data Analysis Using Regression and Multilevel/Hierarchical Models, 2007). 
-The offset variable also shows a marginal improvement in AIC/BIC but with a enormous reduction in culminated R2. - HoweverI am not quite sure of R2 interpretation due to warning message. 
+The offset variable also shows a marginal improvement in AIC/BIC but with a enormous reduction in culminated R2.
 
 *My model of choice will be m3.4 as it contains the needed interaction effect and
-offset variable will performing best on AIC and BIC.* 
+offset variable which also performs the best following the AIC and BIC.* 
 
 ```{r}
 mean(df_count$count)
@@ -370,10 +371,6 @@ something would be done like a quasipoission regression.
     vi. based on your chosen model - write a short report on what this says about the distribution of ratings as dependent on _pas_ and _task_  
 ```{r}
 ggplot(df_count, aes(col = pas, x = count)) + geom_density() + facet_wrap(~task)
-```
-
-```{r}
-summary(m3.4)
 ```
 
 ```{r}
@@ -559,8 +556,8 @@ confusionMatrix(data=test_df$pred_val4, reference = test_df$right_answer)
 **sum up**
 As all models have exactly the same accuracy we could continue with doing k-fold
 cross-validation. But for now I'll just argue that we care more about true-negative rate.
-It would be awful to correcly classify a person with tumor but even worse to miss
-diagnose someone as false-negative which result in death due to lack of treatment.
+Correctly classifying a person with a tumor is not fun, but it would be even worse to miss
+diagnose someone as a false-negative which could then result in death due to lack of treatment.
 I know the analogy doesn't quite fit in this experiment but I need some way to choose. ;) 
 
 model4 shows the best true-negative-rate and will therefore be chosen as the final model. 

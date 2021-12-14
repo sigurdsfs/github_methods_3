@@ -1,8 +1,10 @@
 ---
 title: "practical_exercise_2, Methods 3, 2021, autumn semester"
 author: '[FILL IN YOUR NAME]'
-date: "[FILL IN THE DATE]"
-output: pdf_document
+date: '[FILL IN THE DATE]'
+output:
+  html_document:
+    df_print: paged
 ---
 
 <style type="text/css">

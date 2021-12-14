@@ -1,5 +1,5 @@
 ---
-title: "practical_exercise_5, Methods 3, 2021, autumn semester"
+title: "portfolio 2.2, Methods 3, 2021, autumn semester"
 author: "Sigurd Fyhn Sørensen"
 date: "13-10-2021"
 output:
@@ -39,7 +39,7 @@ Go to https://osf.io/ecxsj/files/ and download the files associated with Experim
 The data is associated with Experiment 1 of the article at the following DOI https://doi.org/10.1016/j.concog.2019.03.007  
   
 1) Put the data from all subjects into a single data frame - note that some of the subjects do not have the _seed_ variable. For these subjects, add this variable and make in _NA_ for all observations. (The _seed_ variable will not be part of the analysis and is not an experimental variable)  
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, include= FALSE}
 df_exp1 <- readbulk::read_bulk("experiment 1", extension = ".csv") 
 set.seed(3215)
 ```
@@ -160,7 +160,7 @@ summary(m5.2.4)
 ```
  Following the guideline of the lme4 creators approach to selecting correlated or uncorrelated 
 random effects in your model. https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf (page. 7)
-The correlation between target.frames and intercept is fairly high (-0.23) therefore
+The correlation between target.frames and intercept is fairly high (-0.817) therefore
 this needs to be specified in our model by specifying (x|y). This isn't assessed by log-likelihood
 but rather correlation test between slope estimates and intercept. 
 
@@ -243,17 +243,6 @@ cbind(intercept = summary(intercept), slope = summary(slope))
 ```
 Supported by the plots and statistical summary we can can conclude that there isn't
 that much spread in the individual variance at subject level. 
-
-
-**Funny Plot** This plot concatenates all subjects individual curve. But sadly 
-they overlap each other a lot and make it hard to distinguish between them. If you look
-closely you will be able to see 29 lines. But the 2 former plots are clearly better. :P 
-```{r}
-pacman::p_load("sjPlot")
-
-(pp <- plot_model(m5.2.4 ,type="pred",
-       terms=c("target.frames","subject"),pred.type="re"))
-```
 
 
 
@@ -435,7 +424,7 @@ accuracy by target.frames in PAS3 and than PAS2.
     
     iii. Also test the hypothesis that accuracy increases faster with objective evidence for PAS 4 than for PAS 3
 ```{r}
-#Difference between pas2:target.frames pas3:target.frames
+#Difference between pas3:target.frames pas4:target.frames
 contrast.vector2 <- matrix(c(0, 0, 0, 0, 0, 0, -1, 1), nrow=1)
 gh2 <- glht(m5.3.1, contrast.vector2)
 print(summary(gh2))

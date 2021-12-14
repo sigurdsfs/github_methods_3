@@ -43,14 +43,14 @@ REMEMBER: This assignment will be part of your final portfolio
 
 1) Describe the dataset, such that someone who happened upon this dataset could understand the variables and what they contain  
 
-*The dataset is a result of a study, which investigated the properties of formal and informal speech register. To do so different variables were measured, to enlighten what might characterize the register. The variables are what we see in the dataset: 
+The dataset is a result of a study, which investigated the properties of formal and informal speech register. To do so different variables were measured, to enlighten what might characterize the register. The variables are what we see in the dataset: 
 **f0mn**: the mean frequency of the pitch of the sentence uttered i Hz. 
 **scenarios**: the number indicates what specific scenario the subject has been presented with in that observation, e.g. “You are in the professor's office and want to ask for a letter of recommendation” (Grawunder & Winter et al., 2011, p. 2) is an example of a scenario. I must add that this specific scenario was aimed at producing formal speech, while a scenario much the same was aimed at producing informal speech.
 **gender**: the gender of the participant (f = female, m = male)
 **total_duration**: duration of response in seconds ,
 **hiss_count**: the amount of loud hissing breath intake (hiss_count). T
 **attitude**: is either polite or informal, which are variables the scenarios are categorized by. 
-The subjects are the participants of the study - F females whereas M is male.*
+The subjects are the participants of the study - F females whereas M is male.
 
     i. Also consider whether any of the variables in _politeness_ should be encoded as factors or have the factor encoding removed. Hint: ```?factor```  
     
@@ -177,7 +177,18 @@ model3 <- lmer(f0mn ~ gender.f + (1 | subject), data = politeness, REML = FALSE)
 model4 <- lmer(f0mn ~ gender.f + (1 | scenario.f) + (1|subject), data = politeness, REML = FALSE)
 
 ```   
-    
+
+```{r}
+summary(model1)
+
+summary(model2)
+
+summary(model3)
+
+summary(model4)
+
+```
+
 Comparison of models by the Akaike Information Criterion:
 ```{r}
 #v
@@ -209,7 +220,7 @@ r.squaredGLMM(model4)
 
 *model2 showed the best variance explained purely by fixed effects, 68,17%, with scenario as a random intercept.*
 *We can conclude in model3 that adding subject as random intercept rather than scenario explains more of the variance but also has more shared variance with our fixed effect gender.* 
-*Model4 (f0mn ~ gender + (1|scenario) + (1|subject)) showed most explained variance with 80% of the variance being accounted for by both fixed and random effects.* 
+*Model4 (f0mn ~ gender + (1|scenario) + (1|subject)) showed most explained variance with 80% of the variance being accounted for by both fixed and random effects. The largest second-level effect is random-intercept for subject in model4 (516.2).* 
 
 
 

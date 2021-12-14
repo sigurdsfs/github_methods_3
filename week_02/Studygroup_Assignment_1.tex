@@ -1,0 +1,1007 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{Portfolio 1, Methods 3, 2021, autumn semester}
+\author{Sara Krejberg, Niels A. Krogsgaard, Sigurd F. Sørensen, Laura W.
+Paaby}
+\date{29/9 - 2021}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Portfolio 1, Methods 3, 2021, autumn semester},
+  pdfauthor={Sara Krejberg, Niels A. Krogsgaard, Sigurd F. Sørensen, Laura W. Paaby},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+\emph{This assignment has been made in collaboration in Studygroup 9. At
+each exercise initials will indicate, who has made that particular
+exercise. However, we must emphasise that almost everything have been
+done as a group making it hard to distinguish, who has made what
+specific contributions.} \emph{The members of the studygroup have the
+following initials (Name, initials, studynumber):} \emph{- Laura Wulff
+Paaby (LWP), 202006161} \emph{- Niels Aalund Krogsgaard (NAK),
+202008114} \emph{- Sara Engsig Krejberg (SEK), 202007949} \emph{- Sigurd
+Fyhn Sørensen (SFS), 202006317}
+
+\hypertarget{assignment-1-using-mixed-effects-modelling-to-model-hierarchical-data}{%
+\section{Assignment 1: Using mixed effects modelling to model
+hierarchical
+data}\label{assignment-1-using-mixed-effects-modelling-to-model-hierarchical-data}}
+
+In this assignment we will be investigating the \emph{politeness}
+dataset of Winter and Grawunder (2012) and apply basic methods of
+multilevel modelling.
+
+\hypertarget{dataset}{%
+\subsection{Dataset}\label{dataset}}
+
+The dataset has been shared on GitHub, so make sure that the csv-file is
+on your current path. Otherwise you can supply the full path.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{politeness }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}politeness.csv\textquotesingle{}}\NormalTok{) }\DocumentationTok{\#\# read in data}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercises-and-objectives}{%
+\section{Exercises and objectives}\label{exercises-and-objectives}}
+
+The objectives of the exercises of this assignment are:\\
+1) Learning to recognize hierarchical structures within datasets and
+describing them\\
+2) Creating simple multilevel models and assessing their fitness\\
+3) Write up a report about the findings of the study
+
+REMEMBER: In your report, make sure to include code that can reproduce
+the answers requested in the exercises below\\
+REMEMBER: This assignment will be part of your final portfolio
+
+\hypertarget{exercise-1---describing-the-dataset-and-making-some-initial-plots}{%
+\subsection{Exercise 1 - describing the dataset and making some initial
+plots}\label{exercise-1---describing-the-dataset-and-making-some-initial-plots}}
+
+1, (LWP)) Describe the dataset, such that someone who happened upon this
+dataset could understand the variables and what they contain
+
+\emph{The dataset is a result of a study, which investigated the
+properties of formal and informal speech register. To do so different
+variables were measured, to enlighten what might characterize the
+register. The variables are what we see in the dataset: \textbf{f0mn}:
+the mean frequency of the pitch of the sentence uttered i Hz.
+\textbf{scenarios}: the number indicates what specific scenario the
+subject has been presented with in that observation, e.g.~``You are in
+the professor's office and want to ask for a letter of recommendation''
+(Grawunder \& Winter et al., 2011, p.~2) is an example of a scenario. I
+must add that this specific scenario was aimed at producing formal
+speech, while a scenario much the same was aimed at producing informal
+speech. \textbf{gender}: the gender of the participant (f = female, m =
+male) \textbf{total\_duration}: duration of response in seconds ,
+\textbf{hiss\_count}: the amount of loud hissing breath intake
+(hiss\_count). T \textbf{attitude}: is either polite or informal, which
+are variables the scenarios are categorized by. The subjects are the
+participants of the study - F females whereas M is male.}
+
+\begin{verbatim}
+i. Also consider whether any of the variables in _politeness_ should be encoded as factors or have the factor encoding removed. Hint: ```?factor```  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#investigating the data}
+\CommentTok{\#ls.str(politeness)}
+\FunctionTok{glimpse}\NormalTok{(politeness)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 224
+## Columns: 7
+## $ subject        <chr> "F1", "F1", "F1", "F1", "F1", "F1", "F1", "F1", "F1", "~
+## $ gender         <chr> "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", ~
+## $ scenario       <int> 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 1, 1, 2, 2, 3~
+## $ attitude       <chr> "pol", "inf", "pol", "inf", "pol", "inf", "pol", "inf",~
+## $ total_duration <dbl> 18.392, 13.551, 5.217, 4.247, 6.791, 4.126, 6.244, 3.24~
+## $ f0mn           <dbl> 214.6, 210.9, 284.7, 265.6, 210.6, 285.6, 251.5, 281.5,~
+## $ hiss_count     <int> 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#making gender, attitude and scenaruo into facter and adding them to the dataframe:}
+\NormalTok{attitude.f }\OtherTok{=} \FunctionTok{as.factor}\NormalTok{(politeness}\SpecialCharTok{$}\NormalTok{attitude) }
+\NormalTok{gender.f }\OtherTok{=} \FunctionTok{as.factor}\NormalTok{(politeness}\SpecialCharTok{$}\NormalTok{gender)}
+\NormalTok{scenario.f }\OtherTok{=} \FunctionTok{as.factor}\NormalTok{(politeness}\SpecialCharTok{$}\NormalTok{scenario)}
+
+\NormalTok{politeness }\OtherTok{\textless{}{-}}\NormalTok{ politeness }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(attitude.f, gender.f, scenario.f) }
+\end{Highlighting}
+\end{Shaded}
+
+2, (NAK)) Create a new data frame that just contains the subject
+\emph{F1} and run two linear models; one that expresses \emph{f0mn} as
+dependent on \emph{scenario} as an integer; and one that expresses
+\emph{f0mn} as dependent on \emph{scenario} encoded as a factor
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#making a dataframe only for the first subject (F1)}
+\NormalTok{F1\_df }\OtherTok{\textless{}{-}}\NormalTok{ politeness }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(subject }\SpecialCharTok{==} \StringTok{\textquotesingle{}F1\textquotesingle{}}\NormalTok{)}
+
+
+\DocumentationTok{\#\# Running the two linear models}
+\CommentTok{\#model 1 with scenario as integer:}
+\NormalTok{F1\_model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ scenario, }\AttributeTok{data =}\NormalTok{ F1\_df)}
+\CommentTok{\#model 2 with scenario as factor}
+\NormalTok{F1\_model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ scenario.f, }\AttributeTok{data =}\NormalTok{ F1\_df)}
+
+\FunctionTok{summary}\NormalTok{(F1\_model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = f0mn ~ scenario, data = F1_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -44.836 -36.807   6.686  20.918  46.421 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  262.621     20.616  12.738 2.48e-08 ***
+## scenario      -6.886      4.610  -1.494    0.161    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 34.5 on 12 degrees of freedom
+## Multiple R-squared:  0.1568, Adjusted R-squared:  0.0865 
+## F-statistic: 2.231 on 1 and 12 DF,  p-value: 0.1611
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(F1\_model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = f0mn ~ scenario.f, data = F1_df)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -37.50 -13.86   0.00  13.86  37.50 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   212.75      20.35  10.453  1.6e-05 ***
+## scenario.f2    62.40      28.78   2.168   0.0668 .  
+## scenario.f3    35.35      28.78   1.228   0.2591    
+## scenario.f4    53.75      28.78   1.867   0.1041    
+## scenario.f5    27.30      28.78   0.948   0.3745    
+## scenario.f6    -7.55      28.78  -0.262   0.8006    
+## scenario.f7   -14.95      28.78  -0.519   0.6195    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 28.78 on 7 degrees of freedom
+## Multiple R-squared:  0.6576, Adjusted R-squared:  0.364 
+## F-statistic:  2.24 on 6 and 7 DF,  p-value: 0.1576
+\end{verbatim}
+
+\begin{verbatim}
+i. Include the model matrices, $X$ from the General Linear Model, for these two models in your report and describe the different interpretations of _scenario_ that these entail
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#making a model matrix for each model:}
+
+\NormalTok{X1 }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(F1\_model1) }\CommentTok{\#integer model}
+\NormalTok{X2 }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(F1\_model2) }\CommentTok{\#factor model}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{The design matrix for the model with scenario as an integer take
+scenario as a continuous variable where going from 2 to 4 is some
+meaningful doubling. We therefore not only take the scenarios as having
+some kind of meaningful order, but also take scenario 6 is being double
+the amount of scenario 3, all in all treating it as a continuous
+variable (which is of course wrong, since we have no expectation that
+f0mn will change systematically with increasing scenario number).}
+
+\emph{The design matrix for the model with scenario as a factor take
+scenario to be a categorical variable. In the design matrix we can see
+all the different observations of scenario coded as dummy variables, so
+every factor level has its own beta-value connected to it. Scenario 1 is
+``excluded'' since that will be the intercept.}
+
+\textbf{Description of both models and matrixes:} \emph{the factored
+model:} The design matrix is a {[}14x7{]} matrix, so we will get the
+following \(\beta_{0-6}\). This is also shown by the summary of a our
+linear regression model. *A simple regression f0mn \textasciitilde{}
+scenario was conducted. Scenario seemed to account for 36.4\% of the
+variance in f0mn following adjusted R\^{}2. F(1,6) = 2.24, p
+\textgreater0.5) all beta values were insignificant. We only have 14
+observations spread out over 7 different levels. So the high p-value is
+most likely due to sample-size. A further power-analysis could show the
+required sample size required.
+
+\emph{the integer model:} Now that scenario is encoded as an integer the
+design matrix will be a {[}14x2{]} matrix. Our model will therefore only
+give us \(\beta_{0-1}\) and not a \(\beta\) for each level of scenario
+as done in the previous model. This model assumes that there is a
+constant increment of f0mn following a ``increase'' in scenario (if you
+can even talk about a unit increase of scenario). This would only make
+sense if scenarios were ordered as getting harder and harder. The model
+is again f0mn \textasciitilde{} scenario F(1,12) = 2.231,
+p\textgreater0.5) with an adjusted \(R^2\) = 0.0865 showing an explained
+variance of 8.65\% (\(\beta_1\) = -6.886, SE = 4.6, t = -1.5,
+p\textgreater0.16.) Again such a small sample size might be tricky to
+work with.
+
+\begin{verbatim}
+ii. Which coding of _scenario_, as a factor or not, is more fitting?
+\end{verbatim}
+
+\emph{In this context it is only appropriate to code scenario as a
+factor. The reasons are given in the previous exercise.}
+
+3, (SEK)) Make a plot that includes a subplot for each subject that has
+\emph{scenario} on the x-axis and \emph{f0mn} on the y-axis and where
+points are colour coded according to \emph{attitude} i. Describe the
+differences between subjects
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{politeness }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(scenario.f, f0mn, }\AttributeTok{color =}\NormalTok{ attitude.f)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{subject) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Scenarios"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Frequency"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Subplot for Each Subject"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 12 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{Studygroup_Assignment_1_files/figure-latex/unnamed-chunk-6-1.pdf}
+\emph{There seem to be a lower baseline/intercept given that you're a
+male. Attitude doesn't seem to have an large effect on f0mn. So an idea
+could be to add Gender as a fixed effect and subject as a random
+intercept as there is also individual variance within the gender
+category.}
+
+\hypertarget{exercise-2---comparison-of-models}{%
+\subsection{Exercise 2 - comparison of
+models}\label{exercise-2---comparison-of-models}}
+
+1, (SFS)) Build four models and do some comparisons i. a single level
+model that models \emph{f0mn} as dependent on \emph{gender} ii. a
+two-level model that adds a second level on top of i. where unique
+intercepts are modelled for each \emph{scenario} iii. a two-level model
+that only has \emph{subject} as an intercept iv. a two-level model that
+models intercepts for both \emph{scenario} and \emph{subject} v. which
+of the models has the lowest residual standard deviation, also compare
+the Akaike Information Criterion \texttt{AIC}? vi. which of the
+second-level effects explains the most variance?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#i}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender.f, }\AttributeTok{data =}\NormalTok{ politeness)}
+
+\CommentTok{\#ii}
+\NormalTok{model2 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender.f }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ scenario.f), }\AttributeTok{data =}\NormalTok{ politeness, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+                        
+\CommentTok{\#iii}
+\NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender.f }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ subject), }\AttributeTok{data =}\NormalTok{ politeness, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\#iv}
+\NormalTok{model4 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender.f }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ scenario.f) }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{subject), }\AttributeTok{data =}\NormalTok{ politeness, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Comparison of models by the Akaike Information Criterion:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# v}
+\FunctionTok{AIC}\NormalTok{(model1, model2, model3, model4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        df      AIC
+## model1  3 2163.971
+## model2  4 2162.257
+## model3  4 2112.048
+## model4  5 2105.176
+\end{verbatim}
+
+Comparing the residual standard deviation of the models:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#v maybe gather everything in a table}
+\FunctionTok{sigma}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 39.46268
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sigma}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 38.3546
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sigma}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 32.04227
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sigma}\NormalTok{(model4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 30.66355
+\end{verbatim}
+
+\emph{Looking at both the standard deviation and the information
+criterion, we find that the model4 is the best performing model, since
+it has the smallest value both in AIC and RSD.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#vi the most variance explained by the effects (scenario or subject):}
+\NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(MuMIn)}
+
+\FunctionTok{r.squaredGLMM}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 'r.squaredGLMM' now calculates a revised statistic. See the help page.
+\end{verbatim}
+
+\begin{verbatim}
+##            R2m       R2c
+## [1,] 0.6817304 0.6965456
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{r.squaredGLMM}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            R2m       R2c
+## [1,] 0.6798832 0.7862932
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{r.squaredGLMM}\NormalTok{(model4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            R2m       R2c
+## [1,] 0.6787423 0.8045921
+\end{verbatim}
+
+\emph{model2 showed the best variance explained purely by fixed effects,
+68,17\%, with scenario as a random intercept.} \emph{We can conclude in
+model3 that adding subject as random intercept rather than scenario
+explains more of the variance but also has more shared variance with our
+fixed effect gender.} \emph{Model4 (f0mn \textasciitilde{} gender +
+(1\textbar scenario) + (1\textbar subject)) showed most explained
+variance with 80\% of the variance being accounted for by both fixed and
+random effects.}
+
+2, (LWP)) Why is our single-level model bad? \emph{(the single level
+model is bad, since it violates the most important assumption of
+independence)}
+
+\begin{verbatim}
+i. create a new data frame that has three variables, _subject_, _gender_ and _f0mn_, where _f0mn_ is the average of all responses of each subject, i.e. averaging across _attitude_ and_scenario_
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#making a new dataframe with the selected variables: }
+\NormalTok{politeness\_sel }\OtherTok{\textless{}{-}}\NormalTok{ politeness }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(f0mn)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#making sure there is no NA in the new df}
+  \FunctionTok{select}\NormalTok{(f0mn,attitude,subject) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(subject) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{f0mn\_mean =} \FunctionTok{mean}\NormalTok{(f0mn)) }
+
+\NormalTok{politeness\_sel }\OtherTok{\textless{}{-}}\NormalTok{ politeness\_sel }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#adding the gender to the dataframe}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{gender =} \FunctionTok{if\_else}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"F"}\NormalTok{, politeness\_sel}\SpecialCharTok{$}\NormalTok{subject, }\AttributeTok{ignore.case =}\NormalTok{ T),}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{gender =} \FunctionTok{as.factor}\NormalTok{(gender))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ii. build a single-level model that models _f0mn_ as dependent on _gender_ using this new dataset
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#builing single{-}level model }
+\NormalTok{ms }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(f0mn\_mean }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender, }\AttributeTok{data =}\NormalTok{ politeness\_sel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+iii. make Quantile-Quantile plots, comparing theoretical quantiles to the sample quantiles) using `qqnorm` and `qqline` for the new single-level model and compare it to the old single-level model (from 1).i). Which model's residuals ($\epsilon$) fulfil the assumptions of the General Linear Model better?)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#the new single model }
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(ms))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(ms), }\AttributeTok{col =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Studygroup_Assignment_1_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#The old single model }
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model1))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model1), }\AttributeTok{col =} \StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Studygroup_Assignment_1_files/figure-latex/unnamed-chunk-13-2.pdf}
+\emph{Looking at the data we how the ms model doesn't fit the line very
+well, however it does not seemed skewed. The model1 seems a bit skewed,
+and fits the line worse. This could properly have been fixed by trimming
+the data/remove outliers.}
+
+\begin{verbatim}
+iv. Also make a quantile-quantile plot for the residuals of the  multilevel model with two intercepts. Does it look alright?
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#The multilevel model (model 4)}
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model4))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model4), }\AttributeTok{col =} \StringTok{\textquotesingle{}pink\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Studygroup_Assignment_1_files/figure-latex/unnamed-chunk-14-1.pdf}
+\emph{In a perfect world, this model would have made the datapoints fit
+the line better. This doesn't seem to be the case, and the residuals are
+still right skewed. They don't follow the normal distribution perfectly.
+However this is the least important of the assumptions, (normality of
+residuals).}
+
+3, (NAK)) Plotting the two-intercepts model i. Create a plot for each
+subject, (similar to part 3 in Exercise 1), this time also indicating
+the fitted value for each of the subjects for each for the scenarios
+(hint use \texttt{fixef} to get the ``grand effects'' for each gender
+and \texttt{ranef} to get the subject- and scenario-specific effects)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fitted }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(model4) }\CommentTok{\#making the fitted values }
+
+\NormalTok{politeness\_una }\OtherTok{\textless{}{-}}\NormalTok{ politeness }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(f0mn)) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\#making sure we have no NA\textquotesingle{}s}
+  \FunctionTok{mutate}\NormalTok{(fitted) }\CommentTok{\#adding the fitted values to the dataset }
+
+\NormalTok{politeness\_una }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(scenario.f, f0mn, }\AttributeTok{color =}\NormalTok{ attitude.f))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ fitted), }\AttributeTok{colour =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{subject) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Scenario"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Frequency\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Subplot for Each Subject"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Studygroup_Assignment_1_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\hypertarget{exercise-3---now-with-attitude}{%
+\subsection{Exercise 3 - now with
+attitude}\label{exercise-3---now-with-attitude}}
+
+1, (SEK)) Carry on with the model with the two unique intercepts fitted
+(\emph{scenario} and \emph{subject}). i. now build a model that has
+\emph{attitude} as a main effect besides \emph{gender}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# the model to carry on with: model4 \textless{}{-} lmer(f0mn \textasciitilde{} gender.f + (1 | scenario.f) + (1|subject), data = politeness)}
+\CommentTok{\#the new model with both gender and attitude: }
+\NormalTok{model5 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender.f }\SpecialCharTok{+}\NormalTok{ attitude.f }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{scenario.f)}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{subject), }\AttributeTok{data =}\NormalTok{ politeness, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ii. make a separate model that besides the main effects of _attitude_ and _gender_ also include their interaction
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model6 }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(f0mn }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender.f}\SpecialCharTok{*}\NormalTok{attitude.f }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{|}\NormalTok{scenario.f)}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{subject), }\AttributeTok{data =}\NormalTok{ politeness, }\AttributeTok{REML =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(model6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+##   method [lmerModLmerTest]
+## Formula: f0mn ~ gender.f * attitude.f + (1 | scenario.f) + (1 | subject)
+##    Data: politeness
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   2096.0   2119.5  -1041.0   2082.0      205 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.8460 -0.5893 -0.0685  0.3946  3.9518 
+## 
+## Random effects:
+##  Groups     Name        Variance Std.Dev.
+##  subject    (Intercept) 514.09   22.674  
+##  scenario.f (Intercept)  99.08    9.954  
+##  Residual               876.46   29.605  
+## Number of obs: 212, groups:  subject, 16; scenario.f, 7
+## 
+## Fixed effects:
+##                         Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)              255.632      9.289   23.556  27.521  < 2e-16 ***
+## gender.fM               -118.251     12.841   19.922  -9.209 1.28e-08 ***
+## attitude.fpol            -17.198      5.395  190.331  -3.188  0.00168 ** 
+## gender.fM:attitude.fpol    5.563      8.241  190.388   0.675  0.50049    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) gndr.M atttd.
+## gender.fM   -0.605              
+## attitud.fpl -0.299  0.216       
+## gndr.fM:tt.  0.195 -0.323 -0.654
+\end{verbatim}
+
+\begin{verbatim}
+iii. describe what the interaction term in the model says about Korean men's pitch when they are polite relative to Korean women's pitch when they are polite (you don't have to judge whether it is interesting)  
+\end{verbatim}
+
+\textbf{Understanding the output of the model:}\\
+\emph{When males are asked to be polite, their pitch will according to
+this be higher.} \emph{The intercepts is for the female, when uttering
+the statement informal, where they here have the average pitch of 255
+hz.} \emph{GenderfM is then when we go from female to male on the x ax,
+we see how the average pitch decrease with 118 hz.} \emph{attitudef.pol,
+when we go from informal to polite does the average (of both females and
+males) pitch decrease with 17 hz. This is why need the interaction, so
+we can consider more than just the average} \emph{genderM:attitudepol:
+this is the interaction between gender and attitude, and it indicates
+that it decreases 5,5hz less for men than women. This means that the
+change in pitch for men are on -17.192+5.54 = -11.652, whereas the
+womens changes with -17.192 hz.} \emph{Summarizingly, both men and women
+decrease their pitch when going from informal to polite, but the male
+pitch does not decrease as much the women. } \emph{(for the reader: the
+f just means that it is factors, a bit confusing considering the females
+- but this is not the case!)}
+
+\textbf{Reporting the model:} \emph{The model f0mn \textasciitilde{}
+attitude:gender + (1\textbar subject)+ (1\textbar scenario)has an
+\(R^2c\) 0.81 both attitude and gender showed a significant effect on
+f0mn (\(\beta_1\)(attitude\_pol) = -17.2, SE = 5.4, p\textgreater0.05)
+and (\(\beta_2\)(genderM) = -119, SE = 12.8, p\textgreater0.05). Being
+polite and male lowers your frequency. Being both Male and Polite has an
+interaction effect of (\(\beta_3\) = 5.5, SE = 8.24, p\textless0.05).
+Hereby concluding that there is a small positive insignificant
+interaction effect of being male and polite. The SE being proportional
+large compared to the effect size makes it very difficult to say
+anything meaningful.}
+
+2, (SFS)) Compare the three models (1. gender as a main effect; 2.
+gender and attitude as main effects; 3. gender and attitude as main
+effects and the interaction between them. For all three models model
+unique intercepts for \emph{subject} and \emph{scenario}) using residual
+variance, residual standard deviation and AIC.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#model4: gender as main effect }
+\FunctionTok{summary}\NormalTok{(model4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+##   method [lmerModLmerTest]
+## Formula: f0mn ~ gender.f + (1 | scenario.f) + (1 | subject)
+##    Data: politeness
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   2105.2   2122.0  -1047.6   2095.2      207 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.0357 -0.5384 -0.1177  0.4346  3.7808 
+## 
+## Random effects:
+##  Groups     Name        Variance Std.Dev.
+##  subject    (Intercept) 516.19   22.720  
+##  scenario.f (Intercept)  89.36    9.453  
+##  Residual               940.25   30.664  
+## Number of obs: 212, groups:  subject, 16; scenario.f, 7
+## 
+## Fixed effects:
+##             Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)  246.778      8.829   19.248  27.952  < 2e-16 ***
+## gender.fM   -115.186     12.223   16.011  -9.424 6.19e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##           (Intr)
+## gender.fM -0.604
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#model5: gender and attitudes as main effects}
+\FunctionTok{summary}\NormalTok{(model5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+##   method [lmerModLmerTest]
+## Formula: f0mn ~ gender.f + attitude.f + (1 | scenario.f) + (1 | subject)
+##    Data: politeness
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   2094.5   2114.6  -1041.2   2082.5      206 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.8791 -0.5968 -0.0569  0.4260  3.9068 
+## 
+## Random effects:
+##  Groups     Name        Variance Std.Dev.
+##  subject    (Intercept) 514.92   22.692  
+##  scenario.f (Intercept)  99.22    9.961  
+##  Residual               878.39   29.638  
+## Number of obs: 212, groups:  subject, 16; scenario.f, 7
+## 
+## Fixed effects:
+##               Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)    254.408      9.117   21.800  27.904  < 2e-16 ***
+## gender.fM     -115.447     12.161   16.000  -9.494 5.63e-08 ***
+## attitude.fpol  -14.817      4.086  190.559  -3.626 0.000369 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) gndr.M
+## gender.fM   -0.583       
+## attitud.fpl -0.231  0.006
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#model6: gender and attitude as main effects and with an interaction between them}
+\FunctionTok{summary}\NormalTok{(model6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+##   method [lmerModLmerTest]
+## Formula: f0mn ~ gender.f * attitude.f + (1 | scenario.f) + (1 | subject)
+##    Data: politeness
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   2096.0   2119.5  -1041.0   2082.0      205 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.8460 -0.5893 -0.0685  0.3946  3.9518 
+## 
+## Random effects:
+##  Groups     Name        Variance Std.Dev.
+##  subject    (Intercept) 514.09   22.674  
+##  scenario.f (Intercept)  99.08    9.954  
+##  Residual               876.46   29.605  
+## Number of obs: 212, groups:  subject, 16; scenario.f, 7
+## 
+## Fixed effects:
+##                         Estimate Std. Error       df t value Pr(>|t|)    
+## (Intercept)              255.632      9.289   23.556  27.521  < 2e-16 ***
+## gender.fM               -118.251     12.841   19.922  -9.209 1.28e-08 ***
+## attitude.fpol            -17.198      5.395  190.331  -3.188  0.00168 ** 
+## gender.fM:attitude.fpol    5.563      8.241  190.388   0.675  0.50049    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) gndr.M atttd.
+## gender.fM   -0.605              
+## attitud.fpl -0.299  0.216       
+## gndr.fM:tt.  0.195 -0.323 -0.654
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#comparison by AIC:}
+\FunctionTok{AIC}\NormalTok{(model4, model5, model6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        df      AIC
+## model4  5 2105.176
+## model5  6 2094.489
+## model6  7 2096.034
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#comparing by standard deviation of residuals}
+\FunctionTok{sigma}\NormalTok{(model4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 30.66355
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sigma}\NormalTok{(model5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 29.63771
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sigma}\NormalTok{(model6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 29.60505
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#comparing by the residual variance:}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(model4)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 181913
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(model5)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 169681.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(model6)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 169305.6
+\end{verbatim}
+
+\emph{Considering the output of the comparisons, we suggest model 5: it
+is the simpler model and adding the interaction effect (model 6) makes
+almost no explanatory power, while being more complex.}
+
+3, (LWP, NAK, SEK, SFS)) Choose the model that you think describe the
+data the best - and write a short report on the main findings based on
+this model. At least include the following: i. describe what the dataset
+consists of\\
+\emph{The dataset used in this model consists of subject id, binary
+gender indication (F or M), scenario index (from 1 to 7 depending on
+what the scenario was), a variable indicating whether the text should be
+spoken in an formal/polite or informal tone, and a variable called f0mn
+basically stating the average frequency of the utterance in Hz. Besides
+these the data also consisted of total duration of utterances in seconds
+and count of hissing sounds but these are not relevant for the optimal
+model.}
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\setcounter{enumi}{1}
+\item
+  what can you conclude about the effect of gender and attitude on pitch
+  (if anything)?\\
+  \emph{f0mn was found to be significantly modulated by gender.}
+  \(\beta_2 = -115, SE = 12.16, p<0.05\) \emph{Attitude also showed a
+  significant modulating of f0mn} \(\beta_1 = -14.8, SE = 4, p<0.05\)
+\item
+  motivate why you would include separate intercepts for subjects and
+  scenarios (if you think they should be included)\\
+  \textbf{Subjects:} \emph{these are only a sample of the total
+  population. Because subject does not exhaust the population of
+  interest (e.g.~the whole Korean population) it should be modeled as a
+  random effect. Also, each subject will express random variation caused
+  by individual baselines and individual effects of formal vs.~informal
+  situation.}
+\end{enumerate}
+
+\textbf{Scenario:} \emph{Again, these scenarios does not exhaust the
+number of formal or informal scenarios that exist. It should be modeled
+as a random effect since we have no expectation of how the individual
+scenario will affect the pitch compared to the other scenarios. There
+are no preconceptions about any systematic differences between the
+scenarios, making them have idiosyncratic and random effects on pitch.}
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\setcounter{enumi}{3}
+\item
+  describe the variance components of the second level (if any)\\
+  \emph{Both fixed and random effects accounted for roughly 82\% of the
+  variance in the f0mn variable with random effects proportion being
+  12.7\%. Visual inspection shows that both the qqplot and histogram
+  violates the assumption of a mixed effect linear model. The more
+  robust generalized mixed effect model with a link function would be
+  preferred. But as it was not the task such model was not constructed.}
+\item
+  include a Quantile-Quantile plot of your chosen model
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model5))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model5), }\AttributeTok{col =} \StringTok{\textquotesingle{}aquamarine\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Studygroup_Assignment_1_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\emph{We used R (R Core Team, 2019) and lmerTest (Kuznetsova, Brockhoff
+and Christensen, 2017) to perform a linear mixed effects analysis of the
+relationship between f0mn, gender and attitude. As random effects, we
+had intercepts for subjects, and scenario.}
+
+\end{document}
